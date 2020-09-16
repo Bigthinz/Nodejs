@@ -1,0 +1,17 @@
+{
+  "name": "trill",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serve.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug":"ndb serve.js"
+  },
+  "author": "King David",
+  "license": "ISC"
+}
