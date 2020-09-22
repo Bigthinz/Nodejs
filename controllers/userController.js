@@ -41,7 +41,7 @@ exports.getAllUsers = catchAsync( async (req,res,next)=>{
 })
 
 
-
+//updating logged-Inn user data
 exports.updateMe = catchAsync( async(req,res,next)=>{
 
 	//CREATE ERROR IF USER POSTS PASSWORD DATA
@@ -67,6 +67,15 @@ exports.updateMe = catchAsync( async(req,res,next)=>{
 	})
 })
 
+
+exports.deleteMe = catchAsync(async (req,res,next)=>{
+	await User.findByIdAndUpdate(req.user.id, {active: false})
+
+	res.status(204).json({
+		status:"success",
+		data: null
+	})
+})
 
 
 exports.getUser = (req,res)=>{

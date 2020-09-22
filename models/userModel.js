@@ -40,10 +40,15 @@ const userSchema = new mongoose.Schema({
 			validator: function(el){
 				return el === this.password
 			},
-			message:'Password are not the same'
+			message:'Password are not the same' 
 		}
 	},
-	passwordChangedAt: Date
+	passwordChangedAt: Date,
+	active:{
+		type:Boolean,
+		default: true,
+		select: false
+	}
 
 }) 
 
@@ -65,6 +70,15 @@ userSchema.pre('save', function(next){
 	if(!this.isModified('password') || this.isNew) return next()
 
 	this.passwordChangedAt = Date.now() - 1000
+	next()
+})
+
+
+// use with deleting users
+userSchema.pre(/^find/, function(next){
+	// this points to the current query
+	this.find({active: {$ne : false}})
+
 	next()
 })
 
