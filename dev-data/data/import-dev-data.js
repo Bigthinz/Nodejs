@@ -19,7 +19,7 @@ mongoose.connect(DB,{
 	console.log("database connected")
 })
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`,'utf-8'))
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`,'utf-8'))
 			
 
 
