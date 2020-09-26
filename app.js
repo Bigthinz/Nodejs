@@ -11,6 +11,7 @@ const globalErrorHandler = require('./controllers/errorController')
 const appError = require('./utils/appError')
 const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes')
+const reviewRouter = require('./routes/reviewRoutes')
 
 // SET SECURITY HTTP HEADER
 app.use(helmet())
@@ -67,6 +68,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours', tourRouter)
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/reviews', reviewRouter)
 
 
 //HANDLING ALL ROUTE ERRORS IN CASE OF IMPUT URL MISTAKES

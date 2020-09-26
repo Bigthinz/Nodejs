@@ -9,13 +9,13 @@ const reviewSchema = new mongoose.Schema({
 	rating:{
 		type:Number,
 		min: 1,
-		maxL 5
+		max: 5
 
 	},
 	createdAt:{
 		type:Date,
 		default:Date.now()
-	}
+	},
 	tour:{
 		type: mongoose.Schema.ObjectId,
 		ref: 'Tour',
@@ -32,6 +32,20 @@ const reviewSchema = new mongoose.Schema({
 	toJSON:{virtuals:true},
 	toObject:{virtuals:true}
 })
+
+
+reviewSchema.pre(/^find/, function(next){
+	this.populate({
+		path: 'tour',
+		select: 'name'
+	}).populate({
+		path:'user',
+		select: 'name photo'
+	})
+
+	next()
+})
+
 
 
 const Review = mongoose.model('Review', reviewSchema)
