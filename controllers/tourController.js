@@ -377,3 +377,4 @@ exports.getMonthPlan = catchAsync(async (req,res,next)=>{
 		})
 	}*/
 })
+
