@@ -3,7 +3,7 @@ const reviewController = require('./../controllers/reviewController')
 const {protect, restrictTo} = require('./../controllers/authController')
 
 
-const router = express.Router()
+const router = express.Router({mergeParams: true})
 
 router.route('/')
 	  .get(reviewController.getAllReviews)

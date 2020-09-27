@@ -3,10 +3,13 @@ const express = require('express')
 //REQUIRING ROUTES RESPONDS FROM CONTROLLER FOLDER "tourController.js"
 const  tourController = require('./../controllers/tourController')
 const {protect, restrictTo} = require('./../controllers/authController')
-const reviewController = require('./../controllers/reviewController')
+// const reviewController = require('./../controllers/reviewController')
+const reviewRouter = require('./../routes/reviewRoutes')
 
 //MIDDLEWARE
 router = express.Router()
+
+router.use('/:tourId/reviews', reviewRouter)
 
 //check id PARAMS
 /*router.param('id',checkID)*/
@@ -31,10 +34,10 @@ router.route('/:id')
    .patch(tourController.updateTour)
    .delete(protect,restrictTo('admin','lead-guide'), tourController.deleteTour)
 
-
+/*
 router.route('/:tourId/reviews')
 	  .post(protect, restrictTo('user'), reviewController.createReview)
-
+*/
 
 
 module.exports = router
