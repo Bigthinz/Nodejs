@@ -121,6 +121,13 @@ tourSchema.virtual('durationWeeks').get(function(){
 	return this.duration / 7
 })
 
+// virtual populate reviews on tour model
+tourSchema.virtual('reviews', {
+	ref:'Review',
+	foreignField:'tour',
+	localField:'_id'
+})
+
 //DOCUMENT MIDDLEWARE runs before SAVE() and CREATE()
 tourSchema.pre('save',function(next){
 	this.slug = slugify(this.name,{lower:true})

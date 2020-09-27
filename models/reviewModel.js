@@ -33,12 +33,20 @@ const reviewSchema = new mongoose.Schema({
 	toObject:{virtuals:true}
 })
 
-
+//POPULATING TOURS AND USERS IN REVIEWS
 reviewSchema.pre(/^find/, function(next){
-	this.populate({
+	//POPULATE ALL FIELDS STATED
+	/*this.populate({
 		path: 'tour',
 		select: 'name'
 	}).populate({
+		path:'user',
+		select: 'name photo'
+	})*/
+
+
+	//POPULATING ONLY USERS IN REVIEW
+	this.populate({
 		path:'user',
 		select: 'name photo'
 	})
