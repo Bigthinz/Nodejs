@@ -1,6 +1,6 @@
 const fs = require('fs')
 const Tour = require('./../models/tourModel')
-const APIFeatures = require('./../utils/apiFeatures')
+// const APIFeatures = require('./../utils/apiFeatures')
 const catchAsync = require('./../utils/catchAsync')
 const AppError = require('./../utils/appError')
 const factory = require('./handlerFactory')
@@ -50,7 +50,13 @@ exports.aliasTopTours = (req,res,next)=>{
 
 //EXPORTING ROUTE RESPONDS
 
-exports.getAllTours = catchAsync(async (req,res,next)=>{
+
+
+exports.getAllTours = factory.getAll(Tour)
+
+//OLD WAY OF GETTING ALL TOURS BEFORE FACTORY HANDLER
+
+// exports.getAllTours = catchAsync(async (req,res,next)=>{
 	// try{
 		/*console.log(req.query)
 		const queryObj = {...req.query}
@@ -106,13 +112,13 @@ exports.getAllTours = catchAsync(async (req,res,next)=>{
 
 
 		//CALLING CLASS OF DATABASE QUERYING	
-		const features = new APIFeatures(Tour.find(),req.query)
+		/*const features = new APIFeatures(Tour.find(),req.query)
 						.filter()
 						.sort()
 						.fieldLimit()
 						.paginate()
 
-		const tours = await features.query
+		const tours = await features.query*/
 		
 
 	//=---------one way of query or filtering your api
@@ -129,13 +135,13 @@ exports.getAllTours = catchAsync(async (req,res,next)=>{
 		})*/
 
 
-	res.status(200).json({
+	/*res.status(200).json({
 		status:'sucess',
 		result: tours.length,
 		data:{
 			tours
 			}
-		})
+		})*/
 	/*}catch(err){
 		res.status(404).json({
 			status:'Fail',
@@ -143,32 +149,36 @@ exports.getAllTours = catchAsync(async (req,res,next)=>{
 		})
 	}*/
 	
-})
+// })
+
+
+exports.getTour = factory.getOne(Tour, {path: 'reviews'})
 
 
 
-exports.getTour = catchAsync(async (req,res,next)=>{
+//OLD WAY OF GETTING TOUR WITHOUT FACTORY HANDLER
+// exports.getTour = catchAsync(async (req,res,next)=>{
 
-	//GETING THE INPUT ID
-	/*const id = req.params.id * */
+// 	//GETING THE INPUT ID
+// 	/*const id = req.params.id * */
 
 
-// try{
-	//GETING A SINGLE ID
-	const tour = await Tour.findById(req.params.id).populate('reviews')
+// // try{
+// 	//GETING A SINGLE ID
+// 	const tour = await Tour.findById(req.params.id).populate('reviews')
 
-	if(!tour){
-		return next(new AppError('No tour found with that ID',404))
-	}
+// 	if(!tour){
+// 		return next(new AppError('No tour found with that ID',404))
+// 	}
 
-	res.status(200).json({
-		status:'sucess',
-		result: tour.length,
-		data:{
-			tour
-		}
-	})
-})
+// 	res.status(200).json({
+// 		status:'sucess',
+// 		result: tour.length,
+// 		data:{
+// 			tour
+// 		}
+// 	})
+// })
 
 
 

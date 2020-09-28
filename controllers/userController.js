@@ -18,7 +18,11 @@ const filteredObj = (obj, ...allowedFields)=>{
 
 //EXPORTING USER ROUTE RESPONDS
 
-exports.getAllUsers = catchAsync( async (req,res,next)=>{
+exports.getAllUsers = factory.getAll(User)
+
+//OLD WAY OF GETTING ALL USERS BEFORE FACTORY HANDLER
+
+// exports.getAllUsers = catchAsync( async (req,res,next)=>{
 
 	//Initial way of getting all users
 
@@ -29,7 +33,7 @@ exports.getAllUsers = catchAsync( async (req,res,next)=>{
 
 
 	//Get all users exlcuding their password field
-	const users = await User.find()
+	/*const users = await User.find()
 
 	res.status(200).json({
 		status:"sucess",
@@ -39,7 +43,7 @@ exports.getAllUsers = catchAsync( async (req,res,next)=>{
 		}
 
 	})
-})
+})*/
 
 
 //updating logged-Inn user data
@@ -79,19 +83,14 @@ exports.deleteMe = catchAsync(async (req,res,next)=>{
 })
 
 
-exports.getUser = (req,res)=>{
-	res.status(500).json({
-		status: 'error',
-		message:'This route is not define yet'
-	})
-}
+exports.getUser = factory.getOne(User)
 
 
 
 exports.createUser = (req,res)=>{
 	res.status(500).json({
 		status: 'error',
-		message:'This route is not define yet'
+		message:'This route is not defined!. Please use /signup instead'
 	})
 }
 
@@ -104,7 +103,7 @@ exports.updateUser = (req,res)=>{
 	})
 }
 
-//this does not update password
+//this does not update password 
 exports.updateUser = factory.updateOne(User)
 
 exports.deleteUser = factory.deleteOne(User)

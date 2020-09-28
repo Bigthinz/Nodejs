@@ -1,10 +1,14 @@
 const Review = require('./../models/reviewModel')
-const catchAsync = require('./../utils/catchAsync')
+// const catchAsync = require('./../utils/catchAsync')
 const factory = require('./handlerFactory')
 
 
 
-exports.getAllReviews = catchAsync(async (req,res,next)=>{
+exports.getAllReviews = factory.getAll(Review)
+
+
+//OLD WAY BEFORE FACTORY HANDLER
+/*exports.getAllReviews = catchAsync(async (req,res,next)=>{
 
 	//filter for a review when it has an ID
 	let filter = {}
@@ -21,7 +25,7 @@ exports.getAllReviews = catchAsync(async (req,res,next)=>{
 			reviews
 		}
 	})
-})
+})*/
 
 
 
@@ -78,6 +82,8 @@ exports.createReview = catchAsync(async (req,res,next)=>{
 	})
 })
 */
+
+exports.getReview = factory.getOne(Review)
 
 exports.updateReview = factory.updateOne(Review)
 
