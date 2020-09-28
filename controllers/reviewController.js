@@ -24,11 +24,40 @@ exports.getAllReviews = catchAsync(async (req,res,next)=>{
 })
 
 
+
+
+//Decoupled middleware on creating reviews.....this is checked first before a review is created
+//referecnce to the review routes on post method(creating Review)
+exports.setTourUserIds = (req,res,next)=>{
+	//ALLOW NESTED ROUTES
+	if(!req.body.tour){
+		//SETTING tourId in params into the body
+		req.body.tour = req.params.tourId
+	}
+
+
+
+	if(!req.body.user){
+		req.body.user = req.user.id
+	}
+
+	next()
+}
+
+
+exports.createReview = factory.createOne(Review)
+
+
+
+//OLD WAY OF CREATING REVIEWS BEFORE USING FACTORY HANDLER
+/*
 exports.createReview = catchAsync(async (req,res,next)=>{
 
 	console.log(req.params)
+
 	//ALLOW NESTED ROUTES
 	if(!req.body.tour){
+		//SETTING tourId in params into the body
 		req.body.tour = req.params.tourId
 	}
 
@@ -48,7 +77,9 @@ exports.createReview = catchAsync(async (req,res,next)=>{
 		}
 	})
 })
+*/
 
+exports.updateReview = factory.updateOne(Review)
 
 exports.deleteReview = factory.deleteOne(Review)
 

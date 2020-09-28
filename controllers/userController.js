@@ -104,5 +104,7 @@ exports.updateUser = (req,res)=>{
 	})
 }
 
+//this does not update password
+exports.updateUser = factory.updateOne(User)
 
 exports.deleteUser = factory.deleteOne(User)

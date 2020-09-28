@@ -195,27 +195,32 @@ exports.getTour = catchAsync(async (req,res,next)=>{
 // }
 
 
-exports.createTour = catchAsync(async (req,res,next)=>{
-	//OLD WAY OF SAVING TO MONGO DB
-	/*const newTours = new Tour({})
-	newTours.save()*/
+exports.createTour = factory.createOne(Tour)
 
-	// try{
-		 const newTours = await Tour.create(req.body)
 
-		res.status(201).json({
-	 		status:'sucess',
-	 		data:{
-	 			tours:newTours
-	 		}
-	 	})
+/*OLD WAY BEFORE USING HANDLER FACTORY CONTROLLER*/
+
+// exports.createTour = catchAsync(async (req,res,next)=>{
+// 	//OLD WAY OF SAVING TO MONGO DB
+// 	/*const newTours = new Tour({})
+// 	newTours.save()*/
+
+// 	// try{
+// 		 const newTours = await Tour.create(req.body)
+
+// 		res.status(201).json({
+// 	 		status:'sucess',
+// 	 		data:{
+// 	 			tours:newTours
+// 	 		}
+// 	 	})
 	/*}catch(err){
 		res.status(400).json({
 			status:'failed',
 			//message:err*
 			message:err
 		})*/
-	})
+	//})
 
 	
 
@@ -235,6 +240,10 @@ exports.createTour = catchAsync(async (req,res,next)=>{
 	 })*/
 // }
 
+exports.updateTour = factory.updateOne(Tour)
+
+/*
+//Old Way before factory method
 exports.updateTour = catchAsync(async (req,res,next)=>{
 	// try{
 		const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
@@ -251,7 +260,7 @@ exports.updateTour = catchAsync(async (req,res,next)=>{
 			data:{
 				tour
 			}
-		})
+		})*/
 
 	/*}catch(err){
 		res.status(404).json({
@@ -260,7 +269,7 @@ exports.updateTour = catchAsync(async (req,res,next)=>{
 		})
 	}*/
 
-})
+//})
 
 
 
