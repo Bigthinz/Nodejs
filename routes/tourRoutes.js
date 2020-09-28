@@ -23,15 +23,15 @@ router.route('/top-5-cheap')
 			.get(tourController.aliasTopTours, tourController.getAllTours)
 
 router.route('/monthly-plan/:year')
-	  .get(tourController.getMonthPlan)
+	  .get(protect, restrictTo('admin','lead-guide','guide'),tourController.getMonthPlan)
 
 router.route('/')
-	.get(protect,tourController.getAllTours)
-	.post(tourController.createTour)
+	.get(tourController.getAllTours)
+	.post(protect, restrictTo('admin','lead-guide'),tourController.createTour)
 
 router.route('/:id')
    .get(tourController.getTour)
-   .patch(tourController.updateTour)
+   .patch(protect, restrictTo('admin','lead-guide'),tourController.updateTour)
    .delete(protect,restrictTo('admin','lead-guide'), tourController.deleteTour)
 
 /*

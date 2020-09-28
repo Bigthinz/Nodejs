@@ -2,7 +2,7 @@ const express = require('express')
 
 //REQUIRING ROUTES RESPONDS FROM CONTROLLER FOLDER "userController.js"
 const {getUser, getMe,createUser,getAllUsers,updateUser,deleteUser, updateMe, deleteMe} = require('./../controllers/userController')
-const {signup, login, resetPassword, forgotPassword, protect, updatePassword} = require('./../controllers/authController')
+const {signup, login, resetPassword,restrictTo, forgotPassword, protect, updatePassword} = require('./../controllers/authController')
 
 //USING MIDDLEWARE TO PROCESS ROUTES
 router = express.Router()
@@ -15,13 +15,22 @@ router.post('/login', login)
 
 router.post('/forgotPassword', forgotPassword)
 router.patch('/resetPassword/:token',resetPassword)
-router.patch('/updateMyPassword', protect, updatePassword)
 
-router.get('/me', protect, getMe, getUser)
+//this middleware automatically protects all routes that comes after it NOTE!!...because middleware runs in sequence
+router.use(protect)
 
-router.patch('/updateMe', protect, updateMe)
+//note  I removed protect from the rest of the route bcus of the router.use(protect)
+//router.patch('/updateMyPassword', protect, updatePassword)
 
-router.delete('/deleteMe', protect, deleteMe)
+router.patch('/updateMyPassword', updatePassword)
+router.patch('/updateMe',  updateMe)
+
+router.get('/me', getMe, getUser)
+
+router.delete('/deleteMe', deleteMe)
+
+//restrict routes after middleware  to anly ADMIN only to perform
+router.use(restrictTo('admin'))
 
 router.route('/')
    .get(getAllUsers)
