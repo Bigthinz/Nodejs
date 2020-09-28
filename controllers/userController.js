@@ -15,6 +15,12 @@ const filteredObj = (obj, ...allowedFields)=>{
 	return newObj
 }
 
+//THIS GET CALLED FIRST BEFORE CALLING 'GETALL' FROM FACTORY HANDLER TO GET LOGGED IN USER DATA
+exports.getMe = (req,res,next)=>{
+	req.params.id = req.user.id
+	next()
+}
+
 
 //EXPORTING USER ROUTE RESPONDS
 
