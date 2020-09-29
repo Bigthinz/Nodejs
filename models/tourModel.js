@@ -117,6 +117,12 @@ const tourSchema = new mongoose.Schema({
 	toObject:{virtuals:true}
 })
 
+//index() helps to improve the query performance of the application
+//value one stands for acesdind order and -1 for decendening
+tourSchema.index({price: 1, ratingsAverage: -1})
+tourSchema.index({slug:1})
+
+
 tourSchema.virtual('durationWeeks').get(function(){
 	return this.duration / 7
 })
