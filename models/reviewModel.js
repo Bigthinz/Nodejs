@@ -58,6 +58,7 @@ reviewSchema.pre(/^find/, function(next){
 
 //Aggregating or calculating reviews to displays average reviews
 reviewSchema.statics.calcAverageRatings = async function(tourId){
+	console.log(tourId)
 	const stats = await this.aggregate([
 	{
 		$match: {tour: tourId}
@@ -75,7 +76,7 @@ console.log(stats)
 
 	await Tour.findByIdAndUpdate(tourId,{
 		ratingsQuantity: stats[0].nRating,
-		ratingsAverage: stas[0].avgRating
+		ratingsAverage: stats[0].avgRating
 	})
 
 }
