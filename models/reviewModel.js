@@ -72,20 +72,45 @@ reviewSchema.statics.calcAverageRatings = async function(tourId){
 	}
 
 	])
-console.log(stats)
+//console.log(stats)
+
+if(stats.lenght > 0){
 
 	await Tour.findByIdAndUpdate(tourId,{
 		ratingsQuantity: stats[0].nRating,
 		ratingsAverage: stats[0].avgRating
 	})
+}else{
+	await Tour.findByIdAndUpdate(tourId,{
+		ratingsQuantity: 0,
+		ratingsAverage: 0
+	})
+}
+
+
 
 }
 
 
 reviewSchema.post('save', function(){
-	//this points to the current review
-	this.constructor.calcAverageRatings(this.tour)
+//this points to the current review
+this.constructor.calcAverageRatings(this.tour)
 })
+
+reviewSchema.pre(/^findOneAnd/, async function(next){
+//creating a variable on the model called 'r' thus this.r
+this.r = await this.findOne()
+// console.log(this.r)
+next()
+})
+
+
+reviewSchema.post(/^findOneAnd/, async function(){
+//await this.findOne() does not work here because the query has already excuted
+//this.r is now the instance of the review model since we declared it using 'reviewSchema.pre' so we can get access to the model constructor
+await this.r.constructor.calcAverageRatings(this.r.tour)
+})
+
 
 
 const Review = mongoose.model('Review', reviewSchema)
