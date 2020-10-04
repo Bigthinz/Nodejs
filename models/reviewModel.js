@@ -34,6 +34,9 @@ const reviewSchema = new mongoose.Schema({
 	toObject:{virtuals:true}
 })
 
+
+reviewSchema.index({tour:1, user: 1}, {unique: true})
+
 //POPULATING TOURS AND USERS IN REVIEWS
 reviewSchema.pre(/^find/, function(next){
 	//POPULATE ALL FIELDS STATED
@@ -74,7 +77,7 @@ reviewSchema.statics.calcAverageRatings = async function(tourId){
 	])
 //console.log(stats)
 
-if(stats.lenght > 0){
+if(stats.length > 0){
 
 	await Tour.findByIdAndUpdate(tourId,{
 		ratingsQuantity: stats[0].nRating,
@@ -83,7 +86,7 @@ if(stats.lenght > 0){
 }else{
 	await Tour.findByIdAndUpdate(tourId,{
 		ratingsQuantity: 0,
-		ratingsAverage: 0
+		ratingsAverage: 4.5
 	})
 }
 
