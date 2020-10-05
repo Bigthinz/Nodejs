@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const rateLimit = require('express-rate-limit')
@@ -13,8 +14,16 @@ const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes')
 const reviewRouter = require('./routes/reviewRoutes')
 
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'))
+
+//SERVING STATIC FILES
+app.use(express.static(path.join(__dirname, 'public')))
+
+
 // SET SECURITY HTTP HEADER
 app.use(helmet())
+
 
 //DEVELOPMENT LOGGING
 console.log(process.env.NODE_ENV)
@@ -53,7 +62,7 @@ app.use(hpp({
 }))
 
 //SERVING STATIC FILES
-app.use(express.static(`${__dirname}/public`))
+// app.use(express.static(`${__dirname}/public`))
 
 //check requestTime
 //TEST MIDDLEWARE
@@ -65,6 +74,10 @@ app.use((req, res, next) => {
     next()
 })
 
+
+app.get('/', (req,res,next)=>{
+    res.status(200).render('base')
+})
 
 app.use('/api/v1/tours', tourRouter)
 app.use('/api/v1/users', userRouter)
