@@ -25,6 +25,9 @@ router.route('/top-5-cheap')
 router.route('/monthly-plan/:year')
 	  .get(protect, restrictTo('admin','lead-guide','guide'),tourController.getMonthPlan)
 
+router.route('/tours-within/:distance/center/:latlng/unit/:unit')
+	  .get(tourController.getToursWithin)	  
+
 router.route('/')
 	.get(tourController.getAllTours)
 	.post(protect, restrictTo('admin','lead-guide'),tourController.createTour)

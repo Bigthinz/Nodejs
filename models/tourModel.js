@@ -119,9 +119,11 @@ const tourSchema = new mongoose.Schema({
 })
 
 //index() helps to improve the query performance of the application
-//value one stands for acesdind order and -1 for decendening
+//value one stands for acesding order and -1 for decendening
 tourSchema.index({price: 1, ratingsAverage: -1})
 tourSchema.index({slug:1})
+//in other to perform goespatial query we need to index with 2dsphere 
+tourSchema.index({startLocation: '2dsphere'})
 
 
 tourSchema.virtual('durationWeeks').get(function(){
