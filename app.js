@@ -76,7 +76,7 @@ app.use((req, res, next) => {
 
 
 app.get('/', (req,res,next)=>{
-    res.status(200).render('base')
+    res.status(200).render('base', {tour:'The forest Hiker', user: 'king'})
 })
 
 app.use('/api/v1/tours', tourRouter)
