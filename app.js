@@ -33,15 +33,15 @@ if (process.env.NODE_ENV === 'development') {
 
 //LIMIT REQUEST FROM SAME API
 const limiter = rateLimit({
-  max:100,
-  windowMs: 60 * 60 * 1000,
-  message:'Too many request from this IP!!. Please try again in an hour'
+    max: 100,
+    windowMs: 60 * 60 * 1000,
+    message: 'Too many request from this IP!!. Please try again in an hour'
 })
 
 app.use('/api', limiter)
 
 //READING DATA FROM BODY...INTO REQ.BODY
-app.use(express.json({limit: '10kb'}))
+app.use(express.json({ limit: '10kb' }))
 
 //DATA SANITIZATION AGAINST NOSQL INJESTION
 app.use(mongoSanitize())
@@ -51,14 +51,14 @@ app.use(xss())
 
 //PREVENT PARAMETER POLLUTION
 app.use(hpp({
-  whitelist:[
-  'duration',
-  'ratingsQuantity',
-  'ratingsAverage',
-  'maxGroupSize',
-  'difficulty',
-  'price'
-  ]
+    whitelist: [
+        'duration',
+        'ratingsQuantity',
+        'ratingsAverage',
+        'maxGroupSize',
+        'difficulty',
+        'price'
+    ]
 }))
 
 //SERVING STATIC FILES
@@ -75,9 +75,19 @@ app.use((req, res, next) => {
 })
 
 
-app.get('/', (req,res,next)=>{
-    res.status(200).render('base', {tour:'The forest Hiker', user: 'king'})
+app.get('/', (req, res, next) => {
+    res.status(200).render('base', { tour: 'The forest Hiker', user: 'king' })
 })
+
+app.get('/overview', (req, res, next) => {
+    res.status(200).render('overview', { title: 'All tour', user: 'king' })
+})
+
+app.get('/tour', (req, res, next) => {
+    res.status(200).render('tour', { title: 'The forest Hiker', user: 'king' })
+})
+
+
 
 app.use('/api/v1/tours', tourRouter)
 app.use('/api/v1/users', userRouter)
