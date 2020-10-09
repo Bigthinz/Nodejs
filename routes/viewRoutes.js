@@ -3,7 +3,7 @@ const viewController = require('../controllers/viewController')
 
 const router = express.Router()
 
-router.get('/overview', viewController.getOverview)
+router.get('/', viewController.getOverview)
 router.get('/tour', viewController.getTour)
 
 
