@@ -13,6 +13,7 @@ const appError = require('./utils/appError')
 const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes')
 const reviewRouter = require('./routes/reviewRoutes')
+const viewRouter = require('./routes/viewRoutes')
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
@@ -75,20 +76,9 @@ app.use((req, res, next) => {
 })
 
 
-app.get('/', (req, res, next) => {
-    res.status(200).render('base', { tour: 'The forest Hiker', user: 'king' })
-})
-
-app.get('/overview', (req, res, next) => {
-    res.status(200).render('overview', { title: 'All tour', user: 'king' })
-})
-
-app.get('/tour', (req, res, next) => {
-    res.status(200).render('tour', { title: 'The forest Hiker', user: 'king' })
-})
 
 
-
+app.use('/', viewRouter)
 app.use('/api/v1/tours', tourRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/reviews', reviewRouter)
